@@ -1,7 +1,37 @@
-import data from "./fakedata.js";
-import WishHitItem from "./WishHitItem.js";
+import username from "./data/usersdata.js";
 
-export default function WishHitsTable()
+function WishHitItem({item})
+{
+    return (
+        <tr>
+            <td>
+                {item.date}
+            </td>
+            <td>
+                {item.character}
+            </td>
+            <td>
+                {username[item.roller]}
+            </td>
+            <td>
+                {
+                    item.wishers.map(el =>
+                    {
+                        return username[el];
+                    }).join(", ")
+                }
+            </td>
+            <td>
+                {username[item.claimer]}
+            </td>
+            <td>
+                {item.claimSpeed}
+            </td>
+        </tr>
+    );
+}
+
+export default function WishHitsTable({data})
 {
     return (
         <table>
@@ -16,10 +46,9 @@ export default function WishHitsTable()
             <tbody>
                 {
                     data.map(el =>
-                        {
-                            return <WishHitItem item={el} />;
-                        }
-                    )
+                    {
+                        return <WishHitItem item={el} />;
+                    })
                 }
             </tbody>
         </table>
