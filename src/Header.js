@@ -27,7 +27,7 @@ export default function Header({data})
     const last_wish_date = data[data.length - 1].date.split("/");
 
     return (
-        <div>
+        <div className='data-header'>
             <WishCounter count={wish_count} />
             <DaysWithoutWish last_date={new Date(last_wish_date[2], last_wish_date[1] - 1, last_wish_date[0])} />
             <WishPerDay count={wish_count} start_date={new Date(first_wish_date[2], first_wish_date[1] - 1, first_wish_date[0])} />

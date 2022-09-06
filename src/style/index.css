@@ -1,0 +1,68 @@
+body
+{
+    background-color: lightyellow;
+}
+
+.canvas
+{
+    width: 50vw;
+    margin: 20vh auto;
+    padding: 2vh 2vw;
+    background: white;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.data-header
+{
+    display:  flex;
+    justify-content: space-evenly;
+}
+
+.menu
+{
+    display: flex;
+    width:  100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1vh 0;
+}
+
+.menu button
+{
+    margin: 0 1vw;
+    padding: 10px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.menu button:hover, .menu button.selected
+{
+    color: white;
+    background: black;
+}
+
+.wish-table
+{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.wish-table th
+{
+    border: 1px solid black;
+}
+
+.wish-table td
+{
+    padding: 10px;
+}
+
+.wish-table tbody tr:hover
+{
+    color:  white;
+    background: palegreen;
+}

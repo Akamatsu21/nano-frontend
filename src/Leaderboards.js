@@ -18,6 +18,7 @@ function sortObject(obj)
         const use_key = el[0];
         const use_value = el[1];
         sorted_obj[use_key] = use_value;
+        return null;
     });
 
     return sorted_obj;

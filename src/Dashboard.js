@@ -8,12 +8,15 @@ import WishHitsTable from "./WishHitsTable.js";
 export default function Dashboard()
 {
     const [tab, setTab] = useState(0);
+    const tabSelected = (id) => (tab === id ? "selected" : "");
 
     return(
-        <>
+        <div className='canvas'>
             <Header data={data} />
-            <button onClick={() => setTab(0)}>All Wishes</button>
-            <button onClick={() => setTab(1)}>Leaderboard</button>
+            <div className='menu'>
+                <button onClick={() => setTab(0)} className={tabSelected(0)}>All Wishes</button>
+                <button onClick={() => setTab(1)} className={tabSelected(1)}>Leaderboards</button>
+            </div>
             {
                 (() =>
                 {
@@ -21,13 +24,13 @@ export default function Dashboard()
                     {
                     case 0:
                         return <WishHitsTable data={data} />;
-                        break;
                     case 1:
                         return <Leaderboards data={data} />;
-                        break;
+                    default:
+                        return <p>Error.</p>;
                     }
                 })()
             }
-        </>
+        </div>
     );
 }

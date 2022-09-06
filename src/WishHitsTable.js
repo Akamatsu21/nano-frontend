@@ -34,7 +34,7 @@ function WishHitItem({item})
 export default function WishHitsTable({data})
 {
     return (
-        <table>
+        <table className="wish-table">
             <thead><tr>
                 <th>Date</th>
                 <th>Character</th>
@@ -47,7 +47,7 @@ export default function WishHitsTable({data})
                 {
                     data.map(el =>
                     {
-                        return <WishHitItem item={el} />;
+                        return <WishHitItem item={el} key={el.id} />;
                     })
                 }
             </tbody>
