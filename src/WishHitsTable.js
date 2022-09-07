@@ -13,12 +13,12 @@ function WishHitItem({item})
             <td>
                 {username[item.roller]}
             </td>
-            <td>
+            <td className="breakable">
                 {
                     item.wishers.map(el =>
                     {
                         return username[el];
-                    }).join(", ")
+                    }).join("\n")
                 }
             </td>
             <td>
@@ -34,7 +34,7 @@ function WishHitItem({item})
 export default function WishHitsTable({data})
 {
     return (
-        <table className="wish-table">
+        <table className="nano-table full-width">
             <thead><tr>
                 <th>Date</th>
                 <th>Character</th>

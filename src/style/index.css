@@ -1,22 +1,65 @@
 body
 {
-    background-color: lightyellow;
+    background-image: url("../img/background.jpg");
+    background-attachment: fixed;
+    font-size: 18pt;
+    font-family: Helvetica;
+}
+
+.toolbar
+{
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    color: white;
+    background: black;
 }
 
 .canvas
 {
-    width: 50vw;
-    margin: 20vh auto;
+    width: 70vw;
+    margin: 10vh auto;
     padding: 2vh 2vw;
-    background: white;
     border: 2px solid black;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.server-name
+{
+    text-align: center;
+    font-size: 50pt;
+    background: rgb(197, 235, 174);
     border-radius: 10px;
 }
 
 .data-header
 {
-    display:  flex;
+    display: flex;
     justify-content: space-evenly;
+}
+
+.header-box
+{
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    background: floralwhite;
+    border: 5px solid rgb(197, 235, 174);
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.header-box img
+{
+    height: 60px;
+    padding: 5px;
+}
+
+.header-box-text
+{
+    padding: 20px;
 }
 
 .menu
@@ -25,44 +68,93 @@ body
     width:  100%;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 1vh 0;
+    margin: 3vh 0;
 }
 
 .menu button
 {
+    display: flex;
     margin: 0 1vw;
     padding: 10px;
-    background: white;
+    background: floralwhite;
     border: 2px solid black;
     border-radius: 12px;
     cursor: pointer;
+    font-size: 19pt;
+    font-weight: bold;
 }
 
 .menu button:hover, .menu button.selected
 {
-    color: white;
-    background: black;
+    color: lightslategray;
+    background: rgb(197, 235, 174);
 }
 
-.wish-table
+
+.menu button.selected:after
 {
-    width: 100%;
+    display: inline-block;
+    content: "";
+    background-image: url("../img/key.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.nano-table
+{
     border-collapse: collapse;
     text-align: center;
 }
 
-.wish-table th
+.nano-table th
 {
+    background: rgba(150, 180, 130, 0.6);
+    padding: 10px;
     border: 1px solid black;
 }
 
-.wish-table td
+.nano-table td
 {
     padding: 10px;
 }
 
-.wish-table tbody tr:hover
+.nano-table tbody tr:nth-child(odd)
+{
+    background: rgba(170, 200, 150, 0.6);
+}
+
+.nano-table tbody tr:nth-child(even)
+{
+    background: rgba(190, 220, 170, 0.6);
+}
+
+.nano-table tbody tr:hover
 {
     color:  white;
-    background: palegreen;
+    background: rgba(120, 150, 100, 0.6);
+}
+
+.breakable
+{
+    white-space: pre-wrap;
+}
+
+.full-width
+{
+    width: 100%;
+}
+
+.leaderboards
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ranking
+{
+    width: 25%;
+    border: 1px solid black;
 }

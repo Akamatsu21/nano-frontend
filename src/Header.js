@@ -1,3 +1,7 @@
+import hakase_picture from "./img/hakase.png";
+import nano_picture from "./img/nano.png";
+import sakamoto_picture from "./img/sakamoto.png";
+
 function timeDiffInDays(date1, date2)
 {
     return Math.floor((date1.getTime() - date2.getTime()) /　(24　*　3600　*　1000));
@@ -5,19 +9,19 @@ function timeDiffInDays(date1, date2)
 
 function WishCounter({count})
 {
-    return <div>Total wishes: {count}</div>;
+    return <div className='header-box'><img alt='' src={sakamoto_picture} /><div className='header-box-text'>Total wishes: {count}</div></div>;
 }
 
 function WishPerDay({count, start_date})
 {
     const days_from_start = timeDiffInDays(new Date(), start_date);
-    return <div>Wish per day: {(count / days_from_start).toFixed(2)}</div>;
+    return <div className='header-box'><img alt='' src={nano_picture} /><div className='header-box-text'>Wish per day: {(count / days_from_start).toFixed(2)}</div></div>;
 }
 
 function DaysWithoutWish({last_date})
 {
     const days_since_wish = timeDiffInDays(new Date(), last_date);
-    return <div>{days_since_wish} days without a wish.</div>;
+    return <div className='header-box'><img alt='' src={hakase_picture} /><div className='header-box-text'>{days_since_wish} days without a wish</div></div>;
 }
 
 export default function Header({data})

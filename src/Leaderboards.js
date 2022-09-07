@@ -27,13 +27,13 @@ function sortObject(obj)
 function RankingTable({title, data})
 {
     return(
-        <table>
+        <table className='nano-table ranking'>
             <thead><tr><th colSpan='2'>{title}</th></tr></thead>
             <tbody>
                 {
                     Object.keys(sortObject(data)).map((el) =>
                     {
-                        return (<tr><td>{username[el]}</td><td>{data[el]}</td></tr>);
+                        return (<tr key={username[el]}><td>{username[el]}</td><td>{data[el]}</td></tr>);
                     })
                 }
             </tbody>
@@ -105,7 +105,7 @@ function TopRollers({data})
 export default function Leaderboards({data})
 {
     return (
-        <div>
+        <div className='leaderboards'>
             <TopRollers data={data} />
             <TopWishees data={data} />
             <TopClaimers data={data} />
