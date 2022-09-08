@@ -7,7 +7,7 @@ export default function App()
     const [server, setServer] = useState();
     return(
         <>
-            <Toolbar handler={setServer} />
+            <Toolbar selection={server} handler={setServer} />
             <Dashboard server={server} />
         </>
     );
