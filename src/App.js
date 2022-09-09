@@ -4,10 +4,11 @@ import Toolbar from "./Toolbar.js";
 
 export default function App()
 {
-    const [server, setServer] = useState();
+    const [server, setServer] = useState("");
+    const [user, setUser] = useState("241657945237094410");
     return(
         <>
-            <Toolbar selection={server} handler={setServer} />
+            <Toolbar selection={server} handler={setServer} user={user} />
             <Dashboard server={server} />
         </>
     );

@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import data from "./data/servers.js";
+import username from "./data/usersdata.js";
 
 function Dropdown({selection, handler})
 {
     const [open, setOpen] = useState(false);
-    const [close, setClose] = useState(() => () => setOpen(false));
+    const [close] = useState(() => () => setOpen(false));
     useEffect(() =>
     {
         setTimeout(() =>
@@ -21,21 +22,24 @@ function Dropdown({selection, handler})
     }, [open, close]);
 
     return(
-        <div className='dropdown'>
+        <div className='dropdown server-menu'>
             <button className={open ? "selection arrow-active" : "selection"}
-                    onClick={() => setOpen(!open)}>
-                {selection}
+                    onClick={() => setOpen(prev => !prev)}>
+                {data[selection]}
             </button>
             {open && (
                 <div className='items'>
                     {
-                        data.map(el =>
+                        Object.keys(data).map(key =>
                         {
-                            return <button className={selection === el ? "selected-item" : ""}
-                                           onClick={() => {handler(el); setOpen(false);}}
-                                           key={el}>
-                                        {el}
-                                   </button>;
+                            const val = data[key];
+                            return(
+                                <button className={data[selection] === val ? "selected-item" : ""}
+                                       onClick={() => {handler(key); setOpen(false);}}
+                                       key={key}>
+                                    {val}
+                               </button>
+                            );
                         })
                     }
                 </div>
@@ -44,16 +48,54 @@ function Dropdown({selection, handler})
     );
 }
 
-export default function Toolbar({selection, handler})
+function UserMenu({user})
+{
+    const [open, setOpen] = useState(false);
+    const [close] = useState(() => () => setOpen(false));
+    useEffect(() =>
+    {
+        setTimeout(() =>
+        {
+            if(open)
+            {
+                window.addEventListener("click", close)
+            }
+            else
+            {
+                window.removeEventListener("click", close);
+            }
+        }, 0);
+    }, [open, close]);
+
+    return(
+        <div className='dropdown user-menu'>
+            <button className="username"
+                    onClick={() => setOpen(prev => !prev)}>
+                {username[user]}
+                <img alt='avatar' src='https://cdn.discordapp.com/avatars/241657945237094410/f2aad44a9199704f3af728ec1e39a507.webp' />
+            </button>
+            {open && (
+                <div className='items'>
+                    <button>
+                        Log out<i class="fa fa-sign-out logout-icon"></i>
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default function Toolbar({selection, handler, user})
 {
     useEffect(() =>
     {
-        handler(data[0]);
+        handler(Object.keys(data)[0]);
     }, [handler]);
 
     return(
         <div className='toolbar'>
             <Dropdown selection={selection} handler={handler} />
+            <UserMenu user={user} />
         </div>
     );
 }

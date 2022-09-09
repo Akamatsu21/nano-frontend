@@ -1,5 +1,6 @@
 import {useState} from "react";
 import data from "./data/fakedata.js";
+import server_name from "./data/servers.js"
 
 import Header from "./Header.js";
 import Leaderboards from "./Leaderboards.js";
@@ -12,7 +13,7 @@ export default function Dashboard({server})
 
     return(
         <div className='canvas'>
-            <h1 className='server-name'>{server}</h1>
+            <h1 className='server-name'>{server_name[server]}</h1>
             <Header data={data} />
             <div className='menu'>
                 <button onClick={() => setTab(0)} className={tabSelected(0)}>All Wishes</button>

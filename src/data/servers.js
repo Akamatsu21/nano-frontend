@@ -1,19 +1,8 @@
 const servers =
-[
-    "WaifUwU",
-    "WaifTwOwO",
-    "WaifrEwE"
-];
-
-export default servers;
-
-/*
-const servers =
 {
-    "01284239850249305": "WaifUwU",
-    "63784483435684331": "WaifTwOwO",
-    "12648437535094603": "WaifrEwE"
+    "012842398502493055": "WaifUwU",
+    "682374606140473422": "WaifTwOwO",
+    "1000706408792199229": "WaifrEwE"
 };
 
 export default servers;
-*/
