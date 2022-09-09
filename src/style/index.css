@@ -8,7 +8,7 @@ body
 {
     background-image: url("../img/background.jpg");
     background-attachment: fixed;
-    font-size: 18pt;
+    font-size: 17pt;
     font-family: Helvetica;
 }
 
@@ -124,7 +124,7 @@ body
 .canvas
 {
     width: 70vw;
-    margin: 10vh auto;
+    margin: 10vh auto 0 auto;
     padding: 2vh 2vw;
     border: 2px solid black;
     border-radius: 10px;
