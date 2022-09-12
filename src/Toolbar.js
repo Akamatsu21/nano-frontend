@@ -48,10 +48,12 @@ function Dropdown({selection, handler})
     );
 }
 
-function UserMenu({user})
+function UserMenu({user, logout})
 {
     const [open, setOpen] = useState(false);
     const [close] = useState(() => () => setOpen(false));
+    const user_defined = user.id !== undefined;
+    
     useEffect(() =>
     {
         setTimeout(() =>
@@ -69,15 +71,17 @@ function UserMenu({user})
 
     return(
         <div className='dropdown user-menu'>
-            <button className="username"
-                    onClick={() => setOpen(prev => !prev)}>
-                {username[user]}
-                <img alt='avatar' src='https://cdn.discordapp.com/avatars/241657945237094410/f2aad44a9199704f3af728ec1e39a507.webp' />
-            </button>
+            {user_defined && (
+                <button className="username"
+                        onClick={() => setOpen(prev => !prev)}>
+                    {user.username}
+                    <img alt='avatar' src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp`} />
+                </button>
+            )}
             {open && (
                 <div className='items'>
-                    <button>
-                        Log out<i class="fa fa-sign-out logout-icon"></i>
+                    <button onClick={logout}>
+                        Log out<i className="fa fa-sign-out logout-icon"></i>
                     </button>
                 </div>
             )}
@@ -85,7 +89,7 @@ function UserMenu({user})
     );
 }
 
-export default function Toolbar({selection, handler, user})
+export default function Toolbar({selection, handler, user, logout})
 {
     useEffect(() =>
     {
@@ -95,7 +99,7 @@ export default function Toolbar({selection, handler, user})
     return(
         <div className='toolbar'>
             <Dropdown selection={selection} handler={handler} />
-            <UserMenu user={user} />
+            <UserMenu user={user} logout={logout} />
         </div>
     );
 }
