@@ -45,7 +45,7 @@ export default function WishHitsTable({data})
             </tr></thead>
             <tbody>
                 {
-                    data.map(el =>
+                    data.reverse().map(el =>
                     {
                         return <WishHitItem item={el} key={el.id} />;
                     })

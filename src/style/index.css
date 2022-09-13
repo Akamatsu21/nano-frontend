@@ -113,7 +113,7 @@ body
 
 .dropdown button.selected-item
 {
-    background-color: rgb(74, 97, 178);
+    border: 5px solid black;
 }
 
 .logout-icon

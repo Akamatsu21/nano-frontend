@@ -1,19 +1,17 @@
 import {useState} from "react";
-import data from "./data/fakedata.js";
-import server_name from "./data/servers.js"
 
 import Header from "./Header.js";
 import Leaderboards from "./Leaderboards.js";
 import WishHitsTable from "./WishHitsTable.js";
 
-export default function Dashboard({server})
+export default function Dashboard({server, server_names, data})
 {
     const [tab, setTab] = useState(0);
     const tabSelected = (id) => (tab === id ? "selected" : "");
 
     return(
         <div className='canvas'>
-            <h1 className='server-name'>{server_name[server]}</h1>
+            <h1 className='server-name'>{server_names[server]}</h1>
             <Header data={data} />
             <div className='menu'>
                 <button onClick={() => setTab(0)} className={tabSelected(0)}>All Wishes</button>

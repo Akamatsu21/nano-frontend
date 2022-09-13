@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import Toolbar from "./Toolbar.js";
 
 import config from "./config.json";
+import endpoints from "./data/endpoints.json";
 
 async function authenticate(token)
 {
@@ -27,7 +28,7 @@ async function authenticate(token)
 
     try
     {
-        const response = await axios.post("https://discord.com/api/oauth2/token", params, axios_config);
+        const response = await axios.post(endpoints.discordAuth, params, axios_config);
         console.log("Auth response");
         console.log(response);
         return`${response.data.token_type} ${response.data.access_token}`;
@@ -40,7 +41,7 @@ async function authenticate(token)
     }
 }
 
-async function getUserData()
+async function getDiscordApiData(url)
 {
     const axios_config =
     {
@@ -52,14 +53,27 @@ async function getUserData()
 
     try
     {
-        const response = await axios.get("https://discord.com/api/users/@me", axios_config);
-        console.log("User response");
+        const response = await axios.get(url, axios_config);
         console.log(response);
         return response;
     }
     catch(error)
     {
-        console.log("User error");
+        console.log(error);
+        return null;
+    }
+}
+
+async function getNanoApiData(url, params)
+{
+    try
+    {
+        const response = await axios.get(url + "?" + params);
+        console.log(response);
+        return response;
+    }
+    catch(error)
+    {
         console.log(error);
         return null;
     }
@@ -71,6 +85,9 @@ export default function App()
     const [logged_in, setLoggedIn] = useState(ReactSession.get("auth_token") !== undefined);
     const [server, setServer] = useState("");
     const [user, setUser] = useState({});
+    const [server_list, setServerList] = useState([]);
+    const [data, setData] = useState({});
+    const [ready, setReady] = useState(false);
 
     useEffect(() =>
     {
@@ -100,7 +117,7 @@ export default function App()
         }
         else
         {
-            getUserData().then(user_data =>
+            getDiscordApiData(endpoints.discordUser).then(user_data =>
             {
                 if(user_data)
                 {
@@ -112,16 +129,63 @@ export default function App()
                     });
                 }
             });
+
+            getDiscordApiData(endpoints.discordGuilds).then(guilds_data =>
+            {
+                if(guilds_data)
+                {
+                    const params = guilds_data.data.reduce((acc, el) =>
+                    {
+                        const prefix = acc.length === 0 ? '' : '&';
+                        return acc + prefix + "ids[]=" + el.id;
+                    }, "");
+
+                    getNanoApiData(endpoints.nanoServers, params).then(servers_data =>
+                    {
+                        if(servers_data)
+                        {
+                            const list = servers_data.data.reduce((acc, el) =>
+                            {
+                                const name = guilds_data.data.find(guild => guild.id === el).name;
+                                acc[el] = name;
+                                return acc;
+                            }, {});
+                            setServerList(list);
+                        }
+                    });
+                }
+            });
         }
     }, [logged_in]);
 
+    useEffect(() =>
+    {
+        setServer(Object.keys(server_list)[0]);
+    }, [server_list]);
+
+    useEffect(() =>
+    {
+        if(server)
+        {
+            getNanoApiData(endpoints.nanoWishes, `server=${server}`).then(wish_data =>
+            {
+                if(wish_data)
+                {
+                    setData(wish_data.data);
+                    setReady(true);
+                    console.log(wish_data);
+                }
+            });
+        }
+    }, [server]);
+
     return(
         <>
-            {logged_in && (
+            {logged_in && ready && (
                 <>
-                    <Toolbar selection={server} handler={setServer} user={user}
+                    <Toolbar selection={server} items={server_list} handler={setServer} user={user}
                              logout={() => {ReactSession.set("auth_token", undefined); setLoggedIn(false);}} />
-                    <Dashboard server={server} />
+                    <Dashboard server={server} server_names={server_list} data={data} />
                 </>
             )}
         </>

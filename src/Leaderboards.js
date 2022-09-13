@@ -62,7 +62,7 @@ function TopClaimers({data})
     return <RankingTable title='Top Claimers' data={leaders} />;
 }
 
-function TopWishees({data})
+function TopWishers({data})
 {
     const leaders = data.reduce((acc, el) =>
     {
@@ -81,7 +81,7 @@ function TopWishees({data})
         return acc;
     }, {});
 
-    return <RankingTable title='Top Wishees' data={leaders} />;
+    return <RankingTable title='Top Wishers' data={leaders} />;
 }
 
 function TopRollers({data})
@@ -107,7 +107,7 @@ export default function Leaderboards({data})
     return (
         <div className='leaderboards'>
             <TopRollers data={data} />
-            <TopWishees data={data} />
+            <TopWishers data={data} />
             <TopClaimers data={data} />
         </div>
     );

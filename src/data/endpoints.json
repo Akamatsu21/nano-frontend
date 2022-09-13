@@ -1,0 +1,7 @@
+{
+	"discordAuth": "https://discord.com/api/oauth2/token",
+	"discordUser": "https://discord.com/api/users/@me",
+	"discordGuilds": "https://discord.com/api/users/@me/guilds",
+	"nanoServers": "http://darkchaos2.no-ip.org:8081/servers",
+	"nanoWishes": "http://darkchaos2.no-ip.org:8081/wishes"
+}

@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
-import data from "./data/servers.js";
-import username from "./data/usersdata.js";
 
-function Dropdown({selection, handler})
+function Dropdown({selection, items, handler})
 {
     const [open, setOpen] = useState(false);
     const [close] = useState(() => () => setOpen(false));
@@ -25,16 +23,16 @@ function Dropdown({selection, handler})
         <div className='dropdown server-menu'>
             <button className={open ? "selection arrow-active" : "selection"}
                     onClick={() => setOpen(prev => !prev)}>
-                {data[selection]}
+                {items[selection]}
             </button>
             {open && (
                 <div className='items'>
                     {
-                        Object.keys(data).map(key =>
+                        Object.keys(items).map(key =>
                         {
-                            const val = data[key];
+                            const val = items[key];
                             return(
-                                <button className={data[selection] === val ? "selected-item" : ""}
+                                <button className={selection === key ? "selected-item" : ""}
                                        onClick={() => {handler(key); setOpen(false);}}
                                        key={key}>
                                     {val}
@@ -89,16 +87,11 @@ function UserMenu({user, logout})
     );
 }
 
-export default function Toolbar({selection, handler, user, logout})
+export default function Toolbar({selection, items, handler, user, logout})
 {
-    useEffect(() =>
-    {
-        handler(Object.keys(data)[0]);
-    }, [handler]);
-
     return(
         <div className='toolbar'>
-            <Dropdown selection={selection} handler={handler} />
+            <Dropdown selection={selection} items={items} handler={handler} />
             <UserMenu user={user} logout={logout} />
         </div>
     );
