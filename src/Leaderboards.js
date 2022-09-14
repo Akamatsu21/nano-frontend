@@ -1,5 +1,3 @@
-import username from "./data/usersdata.js";
-
 function sortObject(obj)
 {
     let items = Object.keys(obj).map((key) =>
@@ -24,7 +22,7 @@ function sortObject(obj)
     return sorted_obj;
 }
 
-function RankingTable({title, data})
+function RankingTable({title, data, usernames})
 {
     return(
         <table className='nano-table ranking'>
@@ -33,7 +31,7 @@ function RankingTable({title, data})
                 {
                     Object.keys(sortObject(data)).map((el) =>
                     {
-                        return (<tr key={username[el]}><td>{username[el]}</td><td>{data[el]}</td></tr>);
+                        return (<tr key={usernames[el]}><td>{usernames[el]}</td><td>{data[el]}</td></tr>);
                     })
                 }
             </tbody>
@@ -41,7 +39,7 @@ function RankingTable({title, data})
     );
 }
 
-function TopClaimers({data})
+function TopClaimers({data, usernames})
 {
     const leaders = data.reduce((acc, el) =>
     {
@@ -59,10 +57,10 @@ function TopClaimers({data})
         return acc;
     }, {});
 
-    return <RankingTable title='Top Claimers' data={leaders} />;
+    return <RankingTable title='Top Claimers' data={leaders} usernames={usernames} />;
 }
 
-function TopWishers({data})
+function TopWishers({data, usernames})
 {
     const leaders = data.reduce((acc, el) =>
     {
@@ -81,10 +79,10 @@ function TopWishers({data})
         return acc;
     }, {});
 
-    return <RankingTable title='Top Wishers' data={leaders} />;
+    return <RankingTable title='Top Wishers' data={leaders} usernames={usernames} />;
 }
 
-function TopRollers({data})
+function TopRollers({data, usernames})
 {
     const leaders = data.reduce((acc, el) =>
     {
@@ -99,16 +97,16 @@ function TopRollers({data})
         return acc;
     }, {});
 
-    return <RankingTable title='Top Rollers' data={leaders} />;
+    return <RankingTable title='Top Rollers' data={leaders} usernames={usernames} />;
 }
 
-export default function Leaderboards({data})
+export default function Leaderboards({data, usernames})
 {
     return (
         <div className='leaderboards'>
-            <TopRollers data={data} />
-            <TopWishers data={data} />
-            <TopClaimers data={data} />
+            <TopRollers data={data} usernames={usernames} />
+            <TopWishers data={data} usernames={usernames} />
+            <TopClaimers data={data} usernames={usernames} />
         </div>
     );
 }

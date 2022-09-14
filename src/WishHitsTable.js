@@ -1,6 +1,4 @@
-import username from "./data/usersdata.js";
-
-function WishHitItem({item})
+function WishHitItem({item, usernames})
 {
     return (
         <tr>
@@ -11,18 +9,18 @@ function WishHitItem({item})
                 {item.character}
             </td>
             <td>
-                {username[item.roller]}
+                {usernames[item.roller]}
             </td>
             <td className="breakable">
                 {
                     item.wishers.map(el =>
                     {
-                        return username[el];
+                        return usernames[el];
                     }).join("\n")
                 }
             </td>
             <td>
-                {username[item.claimer]}
+                {usernames[item.claimer]}
             </td>
             <td>
                 {item.claimSpeed}
@@ -31,7 +29,7 @@ function WishHitItem({item})
     );
 }
 
-export default function WishHitsTable({data})
+export default function WishHitsTable({data, usernames})
 {
     return (
         <table className="nano-table full-width">
@@ -45,9 +43,9 @@ export default function WishHitsTable({data})
             </tr></thead>
             <tbody>
                 {
-                    data.reverse().map(el =>
+                    data.map(el =>
                     {
-                        return <WishHitItem item={el} key={el.id} />;
+                        return <WishHitItem item={el} key={el.id} usernames={usernames} />;
                     })
                 }
             </tbody>

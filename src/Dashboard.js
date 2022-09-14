@@ -4,7 +4,7 @@ import Header from "./Header.js";
 import Leaderboards from "./Leaderboards.js";
 import WishHitsTable from "./WishHitsTable.js";
 
-export default function Dashboard({server, server_names, data})
+export default function Dashboard({server, server_names, data, usernames})
 {
     const [tab, setTab] = useState(0);
     const tabSelected = (id) => (tab === id ? "selected" : "");
@@ -23,9 +23,9 @@ export default function Dashboard({server, server_names, data})
                     switch(tab)
                     {
                     case 0:
-                        return <WishHitsTable data={data} />;
+                        return <WishHitsTable data={data} usernames={usernames} />;
                     case 1:
-                        return <Leaderboards data={data} />;
+                        return <Leaderboards data={data} usernames={usernames} />;
                     default:
                         return <p>Error.</p>;
                     }

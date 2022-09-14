@@ -41,13 +41,36 @@ async function authenticate(token)
     }
 }
 
-async function getDiscordApiData(url)
+async function getDiscordApiDataAsUser(url)
 {
     const axios_config =
     {
         headers:
         {
             "authorization": ReactSession.get("auth_token")
+        }
+    };
+
+    try
+    {
+        const response = await axios.get(url, axios_config);
+        console.log(response);
+        return response;
+    }
+    catch(error)
+    {
+        console.log(error);
+        return null;
+    }
+}
+
+async function getDiscordApiDataAsNano(url)
+{
+    const axios_config =
+    {
+        headers:
+        {
+            "authorization": config.nanoToken
         }
     };
 
@@ -85,8 +108,9 @@ export default function App()
     const [logged_in, setLoggedIn] = useState(ReactSession.get("auth_token") !== undefined);
     const [server, setServer] = useState("");
     const [user, setUser] = useState({});
-    const [server_list, setServerList] = useState([]);
+    const [server_list, setServerList] = useState({});
     const [data, setData] = useState({});
+    const [member_list, setMemberList] = useState({});
     const [ready, setReady] = useState(false);
 
     useEffect(() =>
@@ -117,7 +141,7 @@ export default function App()
         }
         else
         {
-            getDiscordApiData(endpoints.discordUser).then(user_data =>
+            getDiscordApiDataAsUser(endpoints.discordUser).then(user_data =>
             {
                 if(user_data)
                 {
@@ -130,7 +154,7 @@ export default function App()
                 }
             });
 
-            getDiscordApiData(endpoints.discordGuilds).then(guilds_data =>
+            getDiscordApiDataAsUser(endpoints.discordMyGuilds).then(guilds_data =>
             {
                 if(guilds_data)
                 {
@@ -167,11 +191,24 @@ export default function App()
     {
         if(server)
         {
+            getDiscordApiDataAsNano(endpoints.discordGuilds + `/${server}/members`).then(members_data =>
+            {
+                if(members_data)
+                {
+                    const list = members_data.data.reduce((acc, el) =>
+                    {
+                        acc[el.user.id] = el.nick;
+                        return acc;
+                    }, {});
+                    setMemberList(list);
+                }
+            });
+
             getNanoApiData(endpoints.nanoWishes, `server=${server}`).then(wish_data =>
             {
                 if(wish_data)
                 {
-                    setData(wish_data.data);
+                    setData(wish_data.data.reverse());
                     setReady(true);
                     console.log(wish_data);
                 }
@@ -185,7 +222,7 @@ export default function App()
                 <>
                     <Toolbar selection={server} items={server_list} handler={setServer} user={user}
                              logout={() => {ReactSession.set("auth_token", undefined); setLoggedIn(false);}} />
-                    <Dashboard server={server} server_names={server_list} data={data} />
+                    <Dashboard server={server} server_names={server_list} data={data} usernames={member_list} />
                 </>
             )}
         </>

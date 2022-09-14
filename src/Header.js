@@ -27,8 +27,8 @@ function DaysWithoutWish({last_date})
 export default function Header({data})
 {
     const wish_count = data.length;
-    const first_wish_date = data[0].date.split("/");
-    const last_wish_date = data[data.length - 1].date.split("/");
+    const last_wish_date = data[0].date.split("/");
+    const first_wish_date = data[data.length - 1].date.split("/");
 
     return (
         <div className='data-header'>
