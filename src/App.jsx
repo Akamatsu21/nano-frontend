@@ -2,7 +2,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {ReactSession} from 'react-client-session';
 import Dashboard from "./Dashboard";
-import Toolbar from "./Toolbar.js";
+import Toolbar from "./Toolbar";
 
 import config from "./config.json";
 import endpoints from "./data/endpoints.json";
