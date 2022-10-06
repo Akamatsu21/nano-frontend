@@ -98,26 +98,25 @@ export default function App()
         if(Math.abs(newFilter) == filter) newFilter = -newFilter;
 
         const filterName = filterMap[Math.abs(newFilter)];
-        var newData = [];
 
         switch(filterName) {
             case 'id':
-                newData = data.sort((prev, next) => next[filterName] - prev[filterName]);
+                data.sort((prev, next) => next[filterName] - prev[filterName]);
                 break;
             case 'claimSpeed':
             case 'roller':
             case 'claimer':
-                newData = data.sort((prev, next) => prev[filterName] - next[filterName]);
+                data.sort((prev, next) => prev[filterName] - next[filterName]);
                 break;
             case 'character':
-                newData = data.sort((prev, next) => prev[filterName]?.localeCompare(next[filterName]));
+                data.sort((prev, next) => prev[filterName]?.localeCompare(next[filterName]));
                 break;
         }
 
-        if(newFilter < 0) newData = newData.reverse();
+        if(newFilter < 0) data.reverse();
 
         setFilter(newFilter);
-        setData([...newData]);
+        setData([...data]);
     }
 
     useEffect(() =>
