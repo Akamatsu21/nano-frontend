@@ -94,68 +94,59 @@ export default function App()
         if(!logged_in)
         {
             const params = new URLSearchParams(window.location.search);
-            if(params.get("code"))
-            {
-                authenticate(params.get("code")).then(auth_token =>
-                {
-                    if(auth_token)
-                    {
-                        ReactSession.set("auth_token", auth_token);
-                        setLoggedIn(true);
-                    }
-                    else
-                    {
-                        window.location = config.authUrl;
-                    }
-                });
 
-            }
-            else
-            {
+            if(!params.get("code")) {
                 window.location = config.authUrl;
+                return;
             }
+
+            authenticate(params.get("code")).then(auth_token =>
+            {
+                if(!auth_token) {
+                    window.location = config.authUrl;
+                    return;
+                }
+
+                ReactSession.set("auth_token", auth_token);
+                setLoggedIn(true);
+            });
         }
-        else
+
+        getDiscordApiData(endpoints.discordUser).then(user_data =>
         {
-            getDiscordApiData(endpoints.discordUser).then(user_data =>
-            {
-                if(user_data)
-                {
-                    setUser(
-                    {
-                        id: user_data.data.id,
-                        username: user_data.data.username,
-                        avatar: user_data.data.avatar
-                    });
-                }
-            });
+            if(!user_data) return;
 
-            getDiscordApiData(endpoints.discordGuilds).then(guilds_data =>
+            setUser(
             {
-                if(guilds_data)
-                {
-                    const params = guilds_data.data.reduce((acc, el) =>
-                    {
-                        const prefix = acc.length === 0 ? '' : '&';
-                        return acc + prefix + "ids[]=" + el.id;
-                    }, "");
-
-                    getNanoApiData(endpoints.nanoServers, params).then(servers_data =>
-                    {
-                        if(servers_data)
-                        {
-                            const list = servers_data.data.reduce((acc, el) =>
-                            {
-                                const name = guilds_data.data.find(guild => guild.id === el).name;
-                                acc[el] = name;
-                                return acc;
-                            }, {});
-                            setServerList(list);
-                        }
-                    });
-                }
+                id: user_data.data.id,
+                username: user_data.data.username,
+                avatar: user_data.data.avatar
             });
-        }
+        });
+
+        getDiscordApiData(endpoints.discordGuilds).then(guilds_data =>
+        {
+            if(!guilds_data) return;
+
+            const params = guilds_data.data.reduce((acc, el) =>
+            {
+                const prefix = acc.length === 0 ? '' : '&';
+                return acc + prefix + "ids[]=" + el.id;
+            }, "");
+
+            getNanoApiData(endpoints.nanoServers, params).then(servers_data =>
+            {
+                if(!servers_data) return;
+
+                const list = servers_data.data.reduce((acc, el) =>
+                {
+                    const name = guilds_data.data.find(guild => guild.id === el).name;
+                    acc[el] = name;
+                    return acc;
+                }, {});
+                setServerList(list);
+            });
+        });
     }, [logged_in]);
 
     useEffect(() =>
@@ -165,18 +156,16 @@ export default function App()
 
     useEffect(() =>
     {
-        if(server)
+        if(!server) return;
+
+        getNanoApiData(endpoints.nanoWishes, `server=${server}`).then(wish_data =>
         {
-            getNanoApiData(endpoints.nanoWishes, `server=${server}`).then(wish_data =>
-            {
-                if(wish_data)
-                {
-                    setData(wish_data.data);
-                    setReady(true);
-                    console.log(wish_data);
-                }
-            });
-        }
+            if(!wish_data) return;
+            
+            setData(wish_data.data);
+            setReady(true);
+            console.log(wish_data);
+        });
     }, [server]);
 
     return(
