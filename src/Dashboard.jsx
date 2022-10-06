@@ -4,7 +4,7 @@ import Header from "./Header";
 import Leaderboards from "./Leaderboards";
 import WishHitsTable from "./WishHitsTable";
 
-export default function Dashboard({server, server_names, data})
+export default function Dashboard({server, server_names, data, filter, currFilter})
 {
     const [tab, setTab] = useState(0);
     const tabSelected = (id) => (tab === id ? "selected" : "");
@@ -23,7 +23,7 @@ export default function Dashboard({server, server_names, data})
                     switch(tab)
                     {
                     case 0:
-                        return <WishHitsTable data={data} />;
+                        return <WishHitsTable data={data} filter={filter} currFilter={currFilter}/>;
                     case 1:
                         return <Leaderboards data={data} />;
                     default:

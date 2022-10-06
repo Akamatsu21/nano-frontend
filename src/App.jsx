@@ -7,6 +7,8 @@ import Toolbar from "./Toolbar";
 import config from "./config.json";
 import endpoints from "./data/endpoints.json";
 
+const filterMap = [null, 'id','character','roller'/*,'wished'*/,'claimer','claimSpeed']
+
 async function authenticate(token)
 {
     const params = new URLSearchParams(
@@ -87,7 +89,36 @@ export default function App()
     const [user, setUser] = useState({});
     const [server_list, setServerList] = useState([]);
     const [data, setData] = useState({});
+    const [filter, setFilter] = useState(1);
     const [ready, setReady] = useState(false);
+
+    const sortFilter = (newFilter) => {
+        newFilter = parseInt(newFilter);
+        if(isNaN(newFilter)) return;
+        if(Math.abs(newFilter) == filter) newFilter = -newFilter;
+
+        const filterName = filterMap[Math.abs(newFilter)];
+        var newData = [];
+
+        switch(filterName) {
+            case 'id':
+                newData = data.sort((prev, next) => next[filterName] - prev[filterName]);
+                break;
+            case 'claimSpeed':
+            case 'roller':
+            case 'claimer':
+                newData = data.sort((prev, next) => prev[filterName] - next[filterName]);
+                break;
+            case 'character':
+                newData = data.sort((prev, next) => prev[filterName]?.localeCompare(next[filterName]));
+                break;
+        }
+
+        if(newFilter < 0) newData = newData.reverse();
+
+        setFilter(newFilter);
+        setData([...newData]);
+    }
 
     useEffect(() =>
     {
@@ -174,7 +205,7 @@ export default function App()
                 <>
                     <Toolbar selection={server} items={server_list} handler={setServer} user={user}
                              logout={() => {ReactSession.set("auth_token", undefined); setLoggedIn(false);}} />
-                    <Dashboard server={server} server_names={server_list} data={data} />
+                    <Dashboard server={server} server_names={server_list} data={data} filter={sortFilter} currFilter={filter}/>
                 </>
             )}
         </>
