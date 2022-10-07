@@ -3,7 +3,7 @@ import username from "./data/usersdata.js";
 function WishHitItem({item})
 {
     return (
-        <tr>
+        <tr onClick={() => {window.open(item.link)}}>
             <td>
                 {item.date}
             </td>
