@@ -194,6 +194,7 @@ export default function App()
             if(!wish_data) return;
             
             setData(wish_data.data);
+            setFilter(1);
             setStats({
                 "wish_count": wish_data.data.length,
                 "last_wish_date": wish_data.data[0].date.split("/"),
