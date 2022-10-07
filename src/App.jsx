@@ -6,6 +6,7 @@ import Toolbar from "./Toolbar";
 
 import config from "./config.json";
 import endpoints from "./data/endpoints.json";
+import username from "./data/usersdata.js";
 
 const filterMap = [null, 'id','character','roller'/*,'wished'*/,'claimer','claimSpeed']
 
@@ -109,7 +110,7 @@ export default function App()
                 break;
             case 'roller':
             case 'claimer':
-                data.sort((prev, next) => prev[filterName] - next[filterName]);
+                data.sort((prev, next) => username[prev[filterName]]?.localeCompare(username[next[filterName]]));
                 break;
             case 'character':
                 data.sort((prev, next) => prev[filterName]?.localeCompare(next[filterName]));
