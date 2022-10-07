@@ -21,7 +21,7 @@ function WishPerDay({count, start_date})
 function DaysWithoutWish({last_date})
 {
     const days_since_wish = timeDiffInDays(new Date(), last_date);
-    return <div className='header-box'><img alt='' src={hakase_picture} /><div className='header-box-text'>{days_since_wish} days without a wish</div></div>;
+    return <div className='header-box'><img alt='' src={hakase_picture} /><div className='header-box-text'>{days_since_wish} day{days_since_wish !== 1 ? "s" : ""} without a wish</div></div>;
 }
 
 export default function Header({data, stats})
