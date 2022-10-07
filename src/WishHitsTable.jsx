@@ -36,12 +36,12 @@ export default function WishHitsTable({data, filter, currFilter})
     return (
         <table className="nano-table full-width">
             <thead><tr>
-                <th onClick={() => filter('1')}>Date{currFilter == 1 ? "⬇️" : currFilter == -1 ? "⬆️" : ""}</th>
-                <th onClick={() => filter('2')}>Character{currFilter == 2 ? "⬇️" : currFilter == -2 ? "⬆️" : ""}</th>
-                <th onClick={() => filter('3')}>Rolled by{currFilter == 3 ? "⬇️" : currFilter == -3 ? "⬆️" : ""}</th>
+                <th onClick={() => filter('1')}>Date{currFilter == 1 ? "⬇️" : currFilter == -1 ? "⬆️" : "➖"}</th>
+                <th onClick={() => filter('2')}>Character{currFilter == 2 ? "⬇️" : currFilter == -2 ? "⬆️" : "➖"}</th>
+                <th onClick={() => filter('3')}>Rolled by{currFilter == 3 ? "⬇️" : currFilter == -3 ? "⬆️" : "➖"}</th>
                 <th /*onClick={() => filter('wished')}*/>Wished by</th>
-                <th onClick={() => filter('4')}>Claimed by{currFilter == 4 ? "⬇️" : currFilter == -4 ? "⬆️" : ""}</th>
-                <th onClick={() => filter('5')}>Claim speed{currFilter == 5 ? "⬇️" : currFilter == -5 ? "⬆️" : ""}</th>
+                <th onClick={() => filter('4')}>Claimed by{currFilter == 4 ? "⬇️" : currFilter == -4 ? "⬆️" : "➖"}</th>
+                <th onClick={() => filter('5')}>Claim speed{currFilter == 5 ? "⬇️" : currFilter == -5 ? "⬆️" : "➖"}</th>
             </tr></thead>
             <tbody>
                 {
