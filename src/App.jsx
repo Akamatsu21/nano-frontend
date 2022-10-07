@@ -105,6 +105,8 @@ export default function App()
                 data.sort((prev, next) => next[filterName] - prev[filterName]);
                 break;
             case 'claimSpeed':
+                data.sort((prev, next) => prev[filterName] - next[filterName]);
+                break;
             case 'roller':
             case 'claimer':
                 data.sort((prev, next) => prev[filterName] - next[filterName]);

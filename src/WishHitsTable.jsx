@@ -41,7 +41,7 @@ export default function WishHitsTable({data, filter, currFilter})
                 <th onClick={() => filter('3')}>Rolled by{currFilter == 3 ? "⬇️" : currFilter == -3 ? "⬆️" : "➖"}</th>
                 <th /*onClick={() => filter('wished')}*/>Wished by</th>
                 <th onClick={() => filter('4')}>Claimed by{currFilter == 4 ? "⬇️" : currFilter == -4 ? "⬆️" : "➖"}</th>
-                <th onClick={() => filter('5')}>Claim speed{currFilter == 5 ? "⬇️" : currFilter == -5 ? "⬆️" : "➖"}</th>
+                <th onClick={() => filter('5')}>Claim speed{currFilter == 5 ? "⬆️" : currFilter == -5 ? "⬇️" : "➖"}</th>
             </tr></thead>
             <tbody>
                 {
