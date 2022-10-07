@@ -90,6 +90,7 @@ export default function App()
     const [server_list, setServerList] = useState([]);
     const [data, setData] = useState({});
     const [filter, setFilter] = useState(1);
+    const [stats, setStats] = useState({});
     const [ready, setReady] = useState(false);
 
     const sortFilter = (newFilter) => {
@@ -193,6 +194,11 @@ export default function App()
             if(!wish_data) return;
             
             setData(wish_data.data);
+            setStats({
+                "wish_count": wish_data.data.length,
+                "last_wish_date": wish_data.data[0].date.split("/"),
+                "first_wish_date": wish_data.data[wish_data.data.length - 1].date.split("/")
+            });
             setReady(true);
             console.log(wish_data);
         });
@@ -204,7 +210,7 @@ export default function App()
                 <>
                     <Toolbar selection={server} items={server_list} handler={setServer} user={user}
                              logout={() => {ReactSession.set("auth_token", undefined); setLoggedIn(false);}} />
-                    <Dashboard server={server} server_names={server_list} data={data} filter={sortFilter} currFilter={filter}/>
+                    <Dashboard server={server} server_names={server_list} data={data} filter={sortFilter} currFilter={filter} stats={stats}/>
                 </>
             )}
         </>
