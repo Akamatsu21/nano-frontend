@@ -1,8 +1,8 @@
 import {useState} from "react";
 
-import Header from "./Header.js";
-import Leaderboards from "./Leaderboards.js";
-import WishHitsTable from "./WishHitsTable.js";
+import Header from "./Header";
+import Leaderboards from "./Leaderboards";
+import WishHitsTable from "./WishHitsTable";
 
 export default function Dashboard({server, server_names, data})
 {
