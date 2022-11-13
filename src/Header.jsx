@@ -21,20 +21,16 @@ function WishPerDay({count, start_date})
 function DaysWithoutWish({last_date})
 {
     const days_since_wish = timeDiffInDays(new Date(), last_date);
-    return <div className='header-box'><img alt='' src={hakase_picture} /><div className='header-box-text'>{days_since_wish} days without a wish</div></div>;
+    return <div className='header-box'><img alt='' src={hakase_picture} /><div className='header-box-text'>{days_since_wish} day{days_since_wish !== 1 ? "s" : ""} without a wish</div></div>;
 }
 
-export default function Header({data})
+export default function Header({data, stats})
 {
-    const wish_count = data.length;
-    const first_wish_date = data[0].date.split("/");
-    const last_wish_date = data[data.length - 1].date.split("/");
-
     return (
         <div className='data-header'>
-            <WishCounter count={wish_count} />
-            <DaysWithoutWish last_date={new Date(last_wish_date[2], last_wish_date[1] - 1, last_wish_date[0])} />
-            <WishPerDay count={wish_count} start_date={new Date(first_wish_date[2], first_wish_date[1] - 1, first_wish_date[0])} />
+            <WishCounter count={stats.wish_count} />
+            <DaysWithoutWish last_date={new Date(stats.last_wish_date[2], stats.last_wish_date[1] - 1, stats.last_wish_date[0])} />
+            <WishPerDay count={stats.wish_count} start_date={new Date(stats.first_wish_date[2], stats.first_wish_date[1] - 1, stats.first_wish_date[0])} />
         </div>
     );
 }

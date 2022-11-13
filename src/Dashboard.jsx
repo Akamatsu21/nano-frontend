@@ -1,10 +1,10 @@
 import {useState} from "react";
 
-import Header from "./Header.js";
-import Leaderboards from "./Leaderboards.js";
-import WishHitsTable from "./WishHitsTable.js";
+import Header from "./Header";
+import Leaderboards from "./Leaderboards";
+import WishHitsTable from "./WishHitsTable";
 
-export default function Dashboard({server, server_names, data})
+export default function Dashboard({server, server_names, data, filter, currFilter, stats})
 {
     const [tab, setTab] = useState(0);
     const tabSelected = (id) => (tab === id ? "selected" : "");
@@ -12,7 +12,7 @@ export default function Dashboard({server, server_names, data})
     return(
         <div className='canvas'>
             <h1 className='server-name'>{server_names[server]}</h1>
-            <Header data={data} />
+            <Header data={data} stats={stats}/>
             <div className='menu'>
                 <button onClick={() => setTab(0)} className={tabSelected(0)}>All Wishes</button>
                 <button onClick={() => setTab(1)} className={tabSelected(1)}>Leaderboards</button>
@@ -23,7 +23,7 @@ export default function Dashboard({server, server_names, data})
                     switch(tab)
                     {
                     case 0:
-                        return <WishHitsTable data={data} />;
+                        return <WishHitsTable data={data} filter={filter} currFilter={currFilter}/>;
                     case 1:
                         return <Leaderboards data={data} />;
                     default:
